@@ -1,0 +1,46 @@
+#gotowork {
+  height: 4rem;
+  margin: 0.5rem 1rem;
+}
+
+.work_container {
+  border: 1px blue solid;
+  height: 100%;
+}
+
+.work_container > div {
+  border: 1px red solid;
+  width: 100%;
+  /* position: fixed; */
+  /* height: 60px; */
+}
+
+#work_button {
+  height: 30%;
+}
+
+#work_button div {
+  /* position: absolute; */
+  /* top: 50%; */
+  -ms-transform: translateY(50%);
+  transform: translateY(50%);
+}
+
+#work_button p {
+  text-align: center;
+}
+
+#work_teams {
+  height: 70%;
+}
+
+#clock {
+  text-align: center;
+}
+
+#myavatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+}

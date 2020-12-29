@@ -24,12 +24,15 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import Work from "./pages/Work";
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/home" component={Home} exact={true} />
+        <Route path="/work" component={Work} exact={true} />
+        {/* 로그인/대기목록 */}
         <Route path="/login" component={Login} exact={true} />
         <Route path="/wait" component={Wait} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
