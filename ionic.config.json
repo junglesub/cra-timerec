@@ -1,0 +1,7 @@
+{
+  "name": "cra-timerec",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
