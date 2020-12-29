@@ -2,7 +2,9 @@ import {
   IonAvatar,
   IonButton,
   IonButtons,
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonItem,
   IonLabel,
@@ -10,7 +12,7 @@ import {
   IonListHeader,
   IonMenuButton,
   IonPage,
-  IonTitle,
+  IonRow,
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
@@ -23,17 +25,25 @@ const Work: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>
-            <h1 id="clock">
-              <ClockContainer />
-            </h1>
-          </IonTitle>
-          <IonAvatar id="myavatar">
-            <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png" />
-          </IonAvatar>
+          <IonGrid>
+            <IonRow className="ion-align-items-center">
+              <IonCol>
+                <IonButtons>
+                  <IonMenuButton id="menuButton" />
+                </IonButtons>
+              </IonCol>
+              <IonCol>
+                <h1 id="clock">
+                  <ClockContainer />
+                </h1>
+              </IonCol>
+              <IonCol className="ion-align-self-end">
+                <IonAvatar id="myavatar">
+                  <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png" />
+                </IonAvatar>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

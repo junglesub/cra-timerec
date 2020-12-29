@@ -39,8 +39,10 @@
 }
 
 #myavatar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 1rem;
+  float: right;
+}
+
+#menuButton {
+  transform: translateY(2.5px);
+  -ms-transform: translateY(2.5px);
 }
