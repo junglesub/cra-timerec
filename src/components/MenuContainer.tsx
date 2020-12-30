@@ -1,4 +1,3 @@
-import { menuController } from "@ionic/core";
 import {
   IonContent,
   IonHeader,

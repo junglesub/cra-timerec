@@ -39,7 +39,10 @@ const Work: React.FC = () => {
               </IonCol>
               <IonCol className="ion-align-self-end">
                 <IonAvatar id="myavatar">
-                  <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png" />
+                  <img
+                    src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png"
+                    alt=""
+                  />
                 </IonAvatar>
               </IonCol>
             </IonRow>
@@ -63,7 +66,10 @@ const Work: React.FC = () => {
               </IonListHeader>
               <IonItem>
                 <IonAvatar slot="start">
-                  <img src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png" />
+                  <img
+                    src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png"
+                    alt=""
+                  />
                 </IonAvatar>
                 <IonLabel>
                   <h3>김한동</h3>
@@ -72,7 +78,10 @@ const Work: React.FC = () => {
               </IonItem>
               <IonItem>
                 <IonAvatar slot="start">
-                  <img src="https://ionicframework.com/docs/demos/api/list/avatar-luke.png" />
+                  <img
+                    src="https://ionicframework.com/docs/demos/api/list/avatar-luke.png"
+                    alt=""
+                  />
                 </IonAvatar>
                 <IonLabel>
                   <h3>이컴순</h3>
