@@ -2,20 +2,20 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as express from "express";
 import fetch from "node-fetch";
+import { config } from "../config";
 
 export const slackAuthRouter = express.Router();
 export default slackAuthRouter;
 
+const redirect_uri = `${config.server}/slackauth/cb`;
 slackAuthRouter.get("/", (req, res) => {
-  const redirect_uri =
-    "http://localhost:5001/cra-timerec-1229/asia-northeast3/app/slackauth/cb";
   return res.redirect(
     `https://cra2020-2.slack.com/oauth?client_id=1340043331121.1617655917201&scope=identity.basic,identity.avatar,identity.email&redirect_uri=${redirect_uri}`
   );
 });
 
 slackAuthRouter.get("/cb", async (req, res) => {
-  const app_uri = "http://localhost:8100/login";
+  const app_uri = `${config.client}/login`;
 
   const { code } = req.query;
   fetch("https://slack.com/api/oauth.access", {
@@ -24,12 +24,13 @@ slackAuthRouter.get("/cb", async (req, res) => {
     body: new URLSearchParams({
       client_id: "1340043331121.1617655917201",
       client_secret: functions.config().slack.client_secret,
+      redirect_uri: redirect_uri,
       code: `${code}`,
     }).toString(),
   })
     .then((doc) => doc.json())
     .then((json) => {
-      if (!json.ok) return res.sendStatus(500);
+      if (!json.ok) return res.status(500).json(json);
       const { name, id, email, image_192 } = json.user;
       const userParams = {
         email: email,
@@ -49,6 +50,7 @@ slackAuthRouter.get("/cb", async (req, res) => {
         })
         .catch(() => {
           // Create User
+          console.log("Creating New User - " + uid);
           const createUserPromise = admin
             .auth()
             .createUser({
