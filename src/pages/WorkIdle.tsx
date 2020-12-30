@@ -1,54 +1,23 @@
 import {
   IonAvatar,
   IonButton,
-  IonButtons,
-  IonCol,
   IonContent,
-  IonGrid,
-  IonHeader,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
-  IonMenuButton,
   IonPage,
-  IonRow,
-  IonToolbar,
 } from "@ionic/react";
 import React from "react";
 import ClockContainer from "../components/ClockContainer";
+import WorkHeader from "../components/WorkHeader";
 
-import "./Work.css";
+import "./WorkIdle.css";
 
-const Work: React.FC = () => {
+const WorkIdle: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonGrid>
-            <IonRow className="ion-align-items-center">
-              <IonCol>
-                <IonButtons>
-                  <IonMenuButton id="menuButton" />
-                </IonButtons>
-              </IonCol>
-              <IonCol>
-                <h1 id="clock">
-                  <ClockContainer />
-                </h1>
-              </IonCol>
-              <IonCol className="ion-align-self-end">
-                <IonAvatar id="myavatar">
-                  <img
-                    src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png"
-                    alt=""
-                  />
-                </IonAvatar>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonToolbar>
-      </IonHeader>
+      <WorkHeader CenterModule={ClockContainer} />
       <IonContent fullscreen>
         <div className="work_container">
           <div id="work_button">
@@ -96,4 +65,4 @@ const Work: React.FC = () => {
   );
 };
 
-export default Work;
+export default WorkIdle;

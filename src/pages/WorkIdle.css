@@ -33,16 +33,3 @@
 #work_teams {
   height: 70%;
 }
-
-#clock {
-  text-align: center;
-}
-
-#myavatar {
-  float: right;
-}
-
-#menuButton {
-  transform: translateY(2.5px);
-  -ms-transform: translateY(2.5px);
-}

@@ -24,7 +24,8 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import Work from "./pages/Work";
+import WorkIdle from "./pages/WorkIdle";
+import WorkProgress from "./pages/WorkProgress";
 import MenuContainer from "./components/MenuContainer";
 
 const App: React.FC = () => (
@@ -33,7 +34,8 @@ const App: React.FC = () => (
       <MenuContainer />
       <IonRouterOutlet id="main">
         <Route path="/home" component={Home} exact={true} />
-        <Route path="/work" component={Work} exact={true} />
+        <Route path="/idle" component={WorkIdle} exact={true} />
+        <Route path="/work" component={WorkProgress} exact={true} />
         {/* 로그인/대기목록 */}
         <Route path="/login" component={Login} exact={true} />
         <Route path="/wait" component={Wait} exact={true} />
