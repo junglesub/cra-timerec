@@ -4,7 +4,7 @@
     "lint": "eslint \"src/**/*\"",
     "build": "tsc",
     "watch": "nodemon --watch 'src/**/*.ts' --exec 'npm run build' --ext ts,json",
-    "serve": "npm run build && firebase emulators:start --only functions",
+    "serve": "export GOOGLE_APPLICATION_CREDENTIALS='/Users/jungsub/Documents/cra-timerec-1229-firebase-adminsdk-qioxh-13558d2eb0.json' && npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
