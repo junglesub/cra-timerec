@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonLoading, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -33,25 +33,32 @@ import { firebaseApp } from "./FirebaseApp";
 
 function PrivateRoute({ children, ...rest }: any) {
   const [user, loading, error] = useAuthState(firebaseApp.auth());
+  const [approved, setApproved] = useState(null);
+
+  useMemo(async () => {
+    user &&
+      firebaseApp
+        .database()
+        .ref(`/users/${user.uid}/approved`)
+        .get()
+        .then((doc) => setApproved(doc.val()))
+        .finally(() => console.log("Database Request"));
+  }, [user]);
   console.log({ user, loading });
   if (loading) {
     return <IonLoading isOpen={true} />;
   }
   if (!!user) {
-    // Check Handong Domain
-    return <Route {...rest} />;
-    // if (auth.email.split("@").pop() === "handong.edu") {
-    // } else {
-    //   return (
-    //     <IonAlert
-    //       isOpen={!auth.isEmpty}
-    //       onDidDismiss={() => firebase.logout()}
-    //       header={"한동대 이메일을 이용해주세요"}
-    //       message={"한동대 이메일 (학번@handong.edu) 만 사용할 수 있습니다."}
-    //       buttons={["로그아웃"]}
-    //     />
-    //   );
-    // }
+    // 인증을 받았는지 확인
+    // approveChecker.then((doc) => console.log(doc?.val()));
+    if (approved === null) return <IonLoading isOpen={true} />;
+    if (approved) {
+      return <Route {...rest} />;
+    } else {
+      return <Wait />;
+    }
+    // if ((await approveChecker)?.val()) return <Route {...rest} />;
+    // else return <Wait />;
   } else {
     // Not Logged In
     return (
@@ -70,10 +77,18 @@ const App: React.FC = () => (
       <MenuContainer />
       <IonRouterOutlet id="main">
         <PrivateRoute path="/home" component={Home} exact={true} />
-        <Route path="/idle" component={WorkIdle} exact={true} />
-        <Route path="/work" component={WorkProgress} exact={true} />
+        <PrivateRoute path="/idle" component={WorkIdle} exact={true} />
+        <PrivateRoute path="/work" component={WorkProgress} exact={true} />
         {/* 로그인/대기목록 */}
         <Route path="/login" component={Login} exact={true} />
+        <Route
+          path="/logout"
+          component={() => {
+            firebaseApp.auth().signOut();
+            return null;
+          }}
+          exact={true}
+        />
         <Route path="/wait" component={Wait} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
       </IonRouterOutlet>

@@ -9,6 +9,8 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebaseApp } from "../FirebaseApp";
 
 import "./WorkHeader.css";
 
@@ -17,9 +19,8 @@ interface ContainerProps {
 }
 
 const WorkHeader: React.FC<ContainerProps> = ({ CenterModule }) => {
-  console.log("Hello");
-  console.log(typeof CenterModule);
-  return (
+  const [user, loading] = useAuthState(firebaseApp.auth());
+  return !loading ? (
     <IonHeader>
       <IonToolbar>
         <IonGrid>
@@ -34,17 +35,14 @@ const WorkHeader: React.FC<ContainerProps> = ({ CenterModule }) => {
             </IonCol>
             <IonCol className="ion-align-self-end">
               <IonAvatar id="myavatar">
-                <img
-                  src="https://ionicframework.com/docs/demos/api/list/avatar-finn.png"
-                  alt=""
-                />
+                <img src={user.photoURL} alt="" />
               </IonAvatar>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonToolbar>
     </IonHeader>
-  );
+  ) : null;
 };
 
 export default WorkHeader;
