@@ -1,7 +1,9 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonApp, IonLoading, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Wait from "./pages/Wait";
@@ -27,13 +29,47 @@ import "./theme/variables.css";
 import WorkIdle from "./pages/WorkIdle";
 import WorkProgress from "./pages/WorkProgress";
 import MenuContainer from "./components/MenuContainer";
+import { firebaseApp } from "./FirebaseApp";
+
+function PrivateRoute({ children, ...rest }: any) {
+  const [user, loading, error] = useAuthState(firebaseApp.auth());
+  console.log({ user, loading });
+  if (loading) {
+    return <IonLoading isOpen={true} />;
+  }
+  if (!!user) {
+    // Check Handong Domain
+    return <Route {...rest} />;
+    // if (auth.email.split("@").pop() === "handong.edu") {
+    // } else {
+    //   return (
+    //     <IonAlert
+    //       isOpen={!auth.isEmpty}
+    //       onDidDismiss={() => firebase.logout()}
+    //       header={"한동대 이메일을 이용해주세요"}
+    //       message={"한동대 이메일 (학번@handong.edu) 만 사용할 수 있습니다."}
+    //       buttons={["로그아웃"]}
+    //     />
+    //   );
+    // }
+  } else {
+    // Not Logged In
+    return (
+      <Route
+        {...rest}
+        component={null}
+        render={() => <Redirect to="/login" />}
+      />
+    );
+  }
+}
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <MenuContainer />
       <IonRouterOutlet id="main">
-        <Route path="/home" component={Home} exact={true} />
+        <PrivateRoute path="/home" component={Home} exact={true} />
         <Route path="/idle" component={WorkIdle} exact={true} />
         <Route path="/work" component={WorkProgress} exact={true} />
         {/* 로그인/대기목록 */}
