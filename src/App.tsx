@@ -30,9 +30,10 @@ import WorkIdle from "./pages/WorkIdle";
 import WorkProgress from "./pages/WorkProgress";
 import MenuContainer from "./components/MenuContainer";
 import { firebaseApp } from "./FirebaseApp";
+import { Logout } from "./pages/Logout";
 
 function PrivateRoute({ children, ...rest }: any) {
-  const [user, loading, error] = useAuthState(firebaseApp.auth());
+  const [user] = useAuthState(firebaseApp.auth());
   const [approved, setApproved] = useState(null);
 
   useMemo(async () => {
@@ -44,10 +45,6 @@ function PrivateRoute({ children, ...rest }: any) {
         .then((doc) => setApproved(doc.val()))
         .finally(() => console.log("Database Request"));
   }, [user]);
-  console.log({ user, loading });
-  if (loading) {
-    return <IonLoading isOpen={true} />;
-  }
   if (!!user) {
     // 인증을 받았는지 확인
     // approveChecker.then((doc) => console.log(doc?.val()));
@@ -71,29 +68,26 @@ function PrivateRoute({ children, ...rest }: any) {
   }
 }
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <MenuContainer />
-      <IonRouterOutlet id="main">
-        <PrivateRoute path="/home" component={Home} exact={true} />
-        <PrivateRoute path="/idle" component={WorkIdle} exact={true} />
-        <PrivateRoute path="/work" component={WorkProgress} exact={true} />
-        {/* 로그인/대기목록 */}
-        <Route path="/login" component={Login} exact={true} />
-        <Route
-          path="/logout"
-          component={() => {
-            firebaseApp.auth().signOut();
-            return null;
-          }}
-          exact={true}
-        />
-        <Route path="/wait" component={Wait} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const [user, loading] = useAuthState(firebaseApp.auth());
+  return (
+    <IonApp>
+      <IonLoading isOpen={loading} />;
+      <IonReactRouter>
+        <MenuContainer />
+        <IonRouterOutlet id="main">
+          <PrivateRoute path="/home" component={Home} exact={true} />
+          <PrivateRoute path="/idle" component={WorkIdle} exact={true} />
+          <PrivateRoute path="/work" component={WorkProgress} exact={true} />
+          {/* 로그인/대기목록 */}
+          <Route path="/login" component={Login} exact={true} />
+          <Route path="/logout" component={Logout} exact={true} />
+          <Route path="/wait" component={Wait} exact={true} />
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

@@ -1,13 +1,15 @@
 import { IonContent, IonPage } from "@ionic/react";
 import React, { useEffect } from "react";
-import { useLocation } from "react-router";
+import { Redirect, useLocation } from "react-router";
 import { firebaseApp } from "../FirebaseApp";
 import qs from "qs";
 import signinwithslack from "../assets/signinwithslack.png";
 import uriList from "../uriList";
 import "./Login.css";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login: React.FC = () => {
+  const [user, loading, error] = useAuthState(firebaseApp.auth());
   const location = useLocation();
   useEffect(() => {
     // Check if token is returned.
@@ -28,7 +30,7 @@ const Login: React.FC = () => {
     }
   }, []);
 
-  return (
+  return !user ? (
     <IonPage>
       <IonContent fullscreen>
         <div className="container">
@@ -47,6 +49,8 @@ const Login: React.FC = () => {
         </div>
       </IonContent>
     </IonPage>
+  ) : (
+    <Redirect to="/" />
   );
 };
 
