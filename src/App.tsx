@@ -69,7 +69,7 @@ function PrivateRoute({ children, ...rest }: any) {
 }
 
 const App: React.FC = () => {
-  const [user, loading] = useAuthState(firebaseApp.auth());
+  const loading = useAuthState(firebaseApp.auth())[1];
   return (
     <IonApp>
       <IonLoading isOpen={loading} />;

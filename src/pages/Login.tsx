@@ -9,7 +9,8 @@ import "./Login.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login: React.FC = () => {
-  const [user, loading, error] = useAuthState(firebaseApp.auth());
+  //[user, loading, error]
+  const [user] = useAuthState(firebaseApp.auth());
   const location = useLocation();
   useEffect(() => {
     // Check if token is returned.
@@ -28,7 +29,7 @@ const Login: React.FC = () => {
         )
         .catch((err) => console.log("Error"));
     }
-  }, []);
+  }, [location.search]);
 
   return !user ? (
     <IonPage>
