@@ -5,7 +5,6 @@ import fetch from "node-fetch";
 import { config } from "../config";
 
 export const slackAuthRouter = express.Router();
-export default slackAuthRouter;
 
 const redirect_uri = `${config.server}/slackauth/cb`;
 slackAuthRouter.get("/", (req, res) => {

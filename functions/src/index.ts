@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as express from "express";
-import slackAuthRouter from "./router/slackAuthRouter";
+import { slackAuthRouter } from "./router/slackAuthRouter";
 
 const app = express();
 admin.initializeApp({
