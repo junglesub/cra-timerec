@@ -33,7 +33,7 @@ import { firebaseApp } from "./FirebaseApp";
 import { Logout } from "./pages/Logout";
 
 function PrivateRoute({ children, ...rest }: any) {
-  const [user] = useAuthState(firebaseApp.auth());
+  const [user, loading] = useAuthState(firebaseApp.auth());
   const [approved, setApproved] = useState(null);
 
   useMemo(async () => {
@@ -45,6 +45,10 @@ function PrivateRoute({ children, ...rest }: any) {
         .then((doc) => setApproved(doc.val()))
         .finally(() => console.log("Database Request"));
   }, [user]);
+
+  // 로딩중일경우 로딩화면만 보여주기
+  if (loading) return <IonLoading isOpen={loading} />;
+
   if (!!user) {
     // 인증을 받았는지 확인
     // approveChecker.then((doc) => console.log(doc?.val()));
@@ -69,10 +73,8 @@ function PrivateRoute({ children, ...rest }: any) {
 }
 
 const App: React.FC = () => {
-  const loading = useAuthState(firebaseApp.auth())[1];
   return (
     <IonApp>
-      <IonLoading isOpen={loading} />;
       <IonReactRouter>
         <MenuContainer />
         <IonRouterOutlet id="main">

@@ -60,10 +60,9 @@ slackAuthRouter.get("/cb", async (req, res) => {
           const createDbUserPromise = admin
             .database()
             .ref("/users")
+            .child(uid)
             .set({
-              [uid]: {
-                approved: false,
-              },
+              approved: false,
             });
           return Promise.all([createUserPromise, createDbUserPromise]);
         })
