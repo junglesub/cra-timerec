@@ -36,13 +36,22 @@ function PrivateRoute({ children, ...rest }: any) {
   const [user, loading] = useAuthState(firebaseApp.auth());
   const [approved, setApproved] = useState(null);
 
+  // Test Purpose
+  firebaseApp
+    .auth()
+    .currentUser?.getIdToken(/* forceRefresh */ true)
+    .then(function (idToken) {
+      console.log(idToken);
+    });
+
   useMemo(async () => {
     user &&
       firebaseApp
-        .database()
-        .ref(`/users/${user.uid}/approved`)
+        .firestore()
+        .collection("users")
+        .doc(user.uid)
         .get()
-        .then((doc) => setApproved(doc.val()))
+        .then((doc) => setApproved(doc.data()?.approved))
         .finally(() => console.log("Database Request"));
   }, [user]);
 
