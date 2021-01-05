@@ -58,10 +58,10 @@ slackAuthRouter.get("/cb", async (req, res) => {
             })
             .then();
           const createDbUserPromise = admin
-            .database()
-            .ref("/users")
-            .child(uid)
-            .set({
+            .firestore()
+            .collection("/users")
+            .doc(uid)
+            .create({
               approved: false,
             });
           return Promise.all([createUserPromise, createDbUserPromise]);

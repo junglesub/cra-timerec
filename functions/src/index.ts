@@ -26,5 +26,5 @@ exports.deleteUserHandle = functions
   .auth.user()
   .onDelete((user) => {
     // Remove from Database
-    return admin.database().ref("/users").child(user.uid).remove();
+    return admin.firestore().collection("/users").doc(user.uid).delete();
   });

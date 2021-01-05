@@ -15,7 +15,12 @@ allUsersRouter.get("/", (req, res) => {
 
       try {
         // Check if user is approved
-        const userDatas = (await admin.database().ref("users").get()).val();
+        const userDatas = (
+          await admin.firestore().collection("/users").get()
+        ).docs.reduce<any>(
+          (prev, curr) => ({ ...prev, [curr.id]: curr.data() }),
+          {}
+        );
         if (!userDatas[uid].approved) return res.sendStatus(403);
 
         const users = await admin.auth().listUsers();
