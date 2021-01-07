@@ -1,8 +1,16 @@
-name: Firebase Continuous Deployment
+name: Firebase Functions Continuous Deployment
 
 on:
   push:
     branches: [master]
+    paths:
+      - "functions/**"
+    # paths-ignore:
+    #   - "src/**"
+
+defaults:
+  run:
+    working-directory: functions
 
 jobs:
   deploy:
