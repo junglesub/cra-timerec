@@ -40,5 +40,6 @@ exports.deleteUserHandle = functions
   .auth.user()
   .onDelete((user) => {
     // Remove from Database
+    admin.firestore().collection("/user_worktime").doc(user.uid).delete();
     return admin.firestore().collection("/users").doc(user.uid).delete();
   });
