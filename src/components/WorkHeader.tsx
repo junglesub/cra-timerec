@@ -10,7 +10,7 @@ import {
 } from "@ionic/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { firebaseApp } from "../FirebaseApp";
+import { firebaseApp } from "../apps/FirebaseApp";
 
 import "./WorkHeader.css";
 

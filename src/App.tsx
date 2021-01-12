@@ -29,7 +29,7 @@ import "./theme/variables.css";
 import WorkIdle from "./pages/WorkIdle";
 import WorkProgress from "./pages/WorkProgress";
 import MenuContainer from "./components/MenuContainer";
-import { firebaseApp } from "./FirebaseApp";
+import { firebaseApp } from "./apps/FirebaseApp";
 import { Logout } from "./pages/Logout";
 
 function PrivateRoute({ children, ...rest }: any) {

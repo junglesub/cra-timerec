@@ -1,7 +1,7 @@
 import { IonContent, IonPage } from "@ionic/react";
 import React, { useEffect } from "react";
 import { Redirect, useLocation } from "react-router";
-import { firebaseApp } from "../FirebaseApp";
+import { firebaseApp } from "../apps/FirebaseApp";
 import qs from "qs";
 import signinwithslack from "../assets/signinwithslack.png";
 import uriList from "../uriList";
