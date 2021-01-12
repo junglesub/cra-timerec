@@ -24,7 +24,18 @@ interface TeamTime {
   since: Date | null;
 }
 
+const toHHMMSS = (sec_num: number) => {
+  const hours = Math.floor(sec_num / 3600);
+  const minutes = Math.floor((sec_num - hours * 3600) / 60);
+  const seconds = sec_num - hours * 3600 - minutes * 60;
+
+  return `${hours}시간 ${minutes < 10 ? "0" : ""}${minutes}분 ${
+    seconds < 10 ? "0" : ""
+  }${seconds}초`;
+};
+
 function ListTeammate({ id = "" }) {
+  const [date, setDate] = useState(new Date().getTime());
   const [teams, setTeams] = useState<Teammate[] | null>(null);
   const [userWorkTime, loading] = useCollection(
     firebaseApp.firestore().collection("user_worktime"),
@@ -32,6 +43,17 @@ function ListTeammate({ id = "" }) {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
+
+  const calculateTime = (
+    since: firebase.default.firestore.Timestamp,
+    duration: number
+  ) => {
+    if (!since) {
+      return duration;
+    } else {
+      return duration + Math.round((date - since.toDate().getTime()) / 1000);
+    }
+  };
 
   // 최적화는 나중에..
   const teamData = userWorkTime?.docs.reduce(
@@ -61,6 +83,15 @@ function ListTeammate({ id = "" }) {
       setTeams(data.data);
     })();
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const date = new Date();
+      setDate(new Date().getTime());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div id={id}>
       <IonList>
@@ -75,7 +106,14 @@ function ListTeammate({ id = "" }) {
               </IonAvatar>
               <IonLabel>
                 <h3>{teammate.name}</h3>
-                <p>{teamData[teammate.uid].duration}</p>
+                <p>
+                  {toHHMMSS(
+                    calculateTime(
+                      teamData[teammate.uid].since,
+                      teamData[teammate.uid].duration
+                    )
+                  )}
+                </p>
               </IonLabel>
             </IonItem>
           ))
