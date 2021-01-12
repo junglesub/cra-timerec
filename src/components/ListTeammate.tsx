@@ -86,7 +86,6 @@ function ListTeammate({ id = "" }) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const date = new Date();
       setDate(new Date().getTime());
     }, 1000);
     return () => clearInterval(timer);

@@ -38,7 +38,7 @@ const WorkIdle: React.FC = () => {
                       .auth()
                       .currentUser?.getIdToken(/* forceRefresh */ true);
 
-                    const data = await axios.get("/worktime/start", {
+                    await axios.get("/worktime/start", {
                       headers: {
                         Authorization: `Bearer ${token}`,
                       },
@@ -58,7 +58,7 @@ const WorkIdle: React.FC = () => {
                       .auth()
                       .currentUser?.getIdToken(/* forceRefresh */ true);
 
-                    const data = await axios.get("/worktime/stop", {
+                    await axios.get("/worktime/stop", {
                       headers: {
                         Authorization: `Bearer ${token}`,
                       },
