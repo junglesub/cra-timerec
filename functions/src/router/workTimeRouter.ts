@@ -13,14 +13,13 @@ workTimeRouter.get("/start", async (req, res) => {
       .get()
   ).data();
   if (!data || !data.since) {
-    admin
-      .firestore()
-      .collection("user_worktime")
-      .doc(req.decodedToken.uid)
-      .update({
+    admin.firestore().collection("user_worktime").doc(req.decodedToken.uid).set(
+      {
         since: new Date(),
         // since: admin.firestore.Timestamp.now(),
-      }) as any;
+      },
+      { merge: true }
+    ) as any;
     return res.sendStatus(200);
   }
   return res.sendStatus(422);
