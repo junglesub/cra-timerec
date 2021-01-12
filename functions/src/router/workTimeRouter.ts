@@ -20,7 +20,7 @@ workTimeRouter.get("/start", async (req, res) => {
       .update({
         since: new Date(),
         // since: admin.firestore.Timestamp.now(),
-      });
+      }) as any;
     return res.sendStatus(200);
   }
   return res.sendStatus(422);
@@ -48,7 +48,7 @@ workTimeRouter.get("/stop", async (req, res) => {
       .update({
         since: null,
         duration: !isNaN(data.duration) ? data.duration + currDur : currDur,
-      });
+      }) as any;
     return res.json({
       currDur,
     });
