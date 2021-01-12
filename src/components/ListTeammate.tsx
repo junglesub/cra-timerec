@@ -66,8 +66,6 @@ function ListTeammate({ id = "" }) {
     {}
   );
 
-  console.log(teamData);
-
   useEffect(() => {
     (async () => {
       const token = await firebaseApp
