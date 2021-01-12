@@ -3,8 +3,19 @@ import * as admin from "firebase-admin";
 import * as express from "express";
 import { slackAuthRouter } from "./router/slackAuthRouter";
 import { allUsersRouter } from "./router/allUsersRouter";
+import { workTimeRouter } from "./router/workTimeRouter";
+import { checkAuth } from "./middlewares/checkAuth";
+import * as cors from "cors";
+import { config } from "./config";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: config.client,
+  })
+);
+
 admin.initializeApp({
   databaseURL: "https://cra-timerec-1229-default-rtdb.firebaseio.com/",
 });
@@ -13,7 +24,10 @@ admin.initializeApp({
 app.use("/slackauth", slackAuthRouter);
 
 // Get all Users Teammate
-app.use("/teammate", allUsersRouter);
+app.use("/teammate", checkAuth, allUsersRouter);
+
+// Work Time Management
+app.use("/worktime", checkAuth, workTimeRouter);
 
 app.use("/", (req, res) => {
   res.send("Hello World!!");
