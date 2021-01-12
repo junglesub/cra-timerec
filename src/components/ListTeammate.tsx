@@ -108,8 +108,8 @@ function ListTeammate({ id = "" }) {
                 <p>
                   {toHHMMSS(
                     calculateTime(
-                      teamData[teammate.uid].since,
-                      teamData[teammate.uid].duration
+                      teamData[teammate.uid]?.since || 0,
+                      teamData[teammate.uid]?.duration || 0
                     )
                   )}
                 </p>

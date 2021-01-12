@@ -28,7 +28,7 @@ const WorkIdle: React.FC = () => {
         <div className="work_container">
           <div id="work_button">
             <div>
-              {!userWorkDoc.data().since ? (
+              {!userWorkDoc.data() || !userWorkDoc.data().since ? (
                 <IonButton
                   id="gotowork"
                   size="large"
