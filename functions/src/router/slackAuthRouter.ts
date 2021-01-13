@@ -62,7 +62,7 @@ slackAuthRouter.get("/cb", async (req, res) => {
             .collection("/users")
             .doc(uid)
             .create({
-              approved: false,
+              approved: true,
             });
           return Promise.all([createUserPromise, createDbUserPromise]);
         })
